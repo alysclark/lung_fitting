@@ -18,6 +18,8 @@ If you have previously install `lungsim` from LungNoodle, please edit `site-pack
 
     python run.py
 
+![Preview](https://raw.githubusercontent.com/tdewolff/lung_fitting/master/preview.jpg)
+
 # Example
 You can load the example files from `example/`, but be aware that due to bugs in the Fortran code the resulting mesh is invalid.
 

@@ -96,6 +96,10 @@ def landmark(widget, landmark, x, y):
     return False
 
 def fit(ipdata, ipnode, ipelem, iterations):
+    if not ipdata or not ipnode or not ipelem:
+        print('Error: data cloud or surface mesh not loaded')
+        return
+
     for landmark in landmarkCoords:
         coords = landmarkCoords[landmark]
         print('Fitting with landmark %s = %s' % (landmark, coords))
@@ -112,11 +116,6 @@ def fit(ipdata, ipnode, ipelem, iterations):
 
     export_node_geometry_2d('.tmp', 'fitted', 0)
     export_elem_geometry_2d('.tmp', 'fitted', 0, 0)
-
-    f = fileinput.FileInput('.tmp.exnode', inplace=True)
-    for line in f:
-        print(line.replace('************', '0.0'))
-    f.close()
 
     surfaceModel.load('.tmp.exnode', '.tmp.exelem')
 
