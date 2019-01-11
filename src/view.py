@@ -24,6 +24,9 @@ class View(QtGui.QWidget):
 
     def setInfo(self, info):
         self._info = info
+    
+    def _infoClicked(self):
+        QtGui.QMessageBox.information(self, 'Information', self._info)
 
     def loadCallback(self, cb):
         self._loadCallback = cb
@@ -52,8 +55,8 @@ class View(QtGui.QWidget):
         self._ui.save_pushButton.clicked.connect(self._saveClicked)
         self._ui.showDatacloud_checkBox.clicked.connect(self._showClicked)
         self._ui.showMesh_checkBox.clicked.connect(self._showClicked)
-        self._ui.info_pushButton.clicked.connect(self._infoClicked)
 
+        self._ui.info_pushButton.clicked.connect(self._infoClicked)
         self._ui.info_pushButton.setIcon(QtGui.QIcon.fromTheme('dialog-information'))
         self._ui.info_pushButton.setText('')
 
@@ -95,9 +98,6 @@ class View(QtGui.QWidget):
             self._ui.surfaceIpelem_lineEdit.setText(os.path.relpath(filename, os.getcwd()))
             self._inputFilenames[2] = str(filename)
             self._path = os.path.dirname(filename)
-    
-    def _infoClicked(self):
-        QtGui.QMessageBox.information(self, 'Information', self._info)
 
     def _loadClicked(self):
         if self._loadCallback:
