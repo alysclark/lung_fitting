@@ -1,8 +1,8 @@
-from PySide import QtGui, QtCore
+from PySide2 import QtGui, QtCore, QtWidgets
 from .ui_view import Ui_View
 import os
 
-class View(QtGui.QWidget):
+class View(QtWidgets.QWidget):
     def __init__(self, scene, parent=None):
         super(View, self).__init__(parent)
         self._inputFilenames = ['', '', '']
@@ -63,9 +63,9 @@ class View(QtGui.QWidget):
         self._originalSceneviewerMousePressEvent = self._ui.sceneviewer_widget.mousePressEvent
         self._ui.sceneviewer_widget.mousePressEvent = self._sceneviewerMousePressEvent
 
-        self._landmarksGroup = QtGui.QButtonGroup(self)
+        self._landmarksGroup = QtWidgets.QButtonGroup(self)
         for landmark_pushButton in self._ui.landmarks_groupBox.children():
-            if type(landmark_pushButton) == QtGui.QPushButton:
+            if type(landmark_pushButton) == QtWidgets.QPushButton:
                 self._landmarksGroup.addButton(landmark_pushButton)
                 landmark_pushButton.pressed.connect(self._landmarkButtonPressed)
                 landmark_pushButton.released.connect(self._landmarkButtonReleased)
@@ -79,21 +79,21 @@ class View(QtGui.QWidget):
             sceneviewer.viewAll()
 
     def _datacloudIpdataClicked(self):
-        filename, _ = QtGui.QFileDialog.getOpenFileName(parent=self, caption='Open data cloud ipdata file', dir=self._path, filter='*.ipdata')
+        filename, _ = QtWidgets.QFileDialog.getOpenFileName(parent=self, caption='Open data cloud ipdata file', dir=self._path, filter='*.ipdata')
         if filename:
             self._ui.datacloudIpdata_lineEdit.setText(os.path.relpath(filename, os.getcwd()))
             self._inputFilenames[0] = str(filename)
             self._path = os.path.dirname(filename)
 
     def _surfaceIpnodeClicked(self):
-        filename, _ = QtGui.QFileDialog.getOpenFileName(parent=self, caption='Open surface ipnode file', dir=self._path, filter='*.ipnode')
+        filename, _ = QtWidgets.QFileDialog.getOpenFileName(parent=self, caption='Open surface ipnode file', dir=self._path, filter='*.ipnode')
         if filename:
             self._ui.surfaceIpnode_lineEdit.setText(os.path.relpath(filename, os.getcwd()))
             self._inputFilenames[1] = str(filename)
             self._path = os.path.dirname(filename)
 
     def _surfaceIpelemClicked(self):
-        filename, _ = QtGui.QFileDialog.getOpenFileName(parent=self, caption='Open surface ipelem file', dir=self._path, filter='*.ipelem')
+        filename, _ = QtWidgets.QFileDialog.getOpenFileName(parent=self, caption='Open surface ipelem file', dir=self._path, filter='*.ipelem')
         if filename:
             self._ui.surfaceIpelem_lineEdit.setText(os.path.relpath(filename, os.getcwd()))
             self._inputFilenames[2] = str(filename)
@@ -101,7 +101,7 @@ class View(QtGui.QWidget):
 
     def _loadClicked(self):
         if self._loadCallback:
-            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+            QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
             self._loadCallback(self._inputFilenames[0], self._inputFilenames[1], self._inputFilenames[2])
             self._graphicsUpdate()
             QtGui.QApplication.restoreOverrideCursor()

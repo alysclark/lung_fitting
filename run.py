@@ -2,7 +2,7 @@ import sys
 import os
 import fileinput
 from shutil import copyfile
-from PySide import QtGui
+from PySide2 import QtGui,QtWidgets
 from src.view import View
 from src.scene import Scene
 from src.model import *
@@ -10,10 +10,10 @@ from src.model import *
 from aether.diagnostics import set_diagnostics_on
 from aether.geometry import define_elem_geometry_2d, define_node_geometry_2d,define_data_geometry, define_rad_from_file, define_rad_from_geom, append_units
 from aether.exports import export_node_geometry_2d, export_elem_geometry_2d,export_data_geometry
-from aether.surface_fitting import fit_surface_geometry
+#from aether.surface_fitting import fit_surface_geometry
 from opencmiss.zinc.scenecoordinatesystem import SCENECOORDINATESYSTEM_WINDOW_PIXEL_TOP_LEFT
 
-app = QtGui.QApplication(sys.argv)
+app = QtWidgets.QApplication(sys.argv)
 scene = Scene()
 
 datacloudModel = FileModel(scene, 'datacloud')
@@ -151,4 +151,4 @@ sys.exit(app.exec_())
 # Print errors
 num = model._logger.getNumberOfMessages()
 for i in range(0, num):
-    print model._logger.getMessageTextAtIndex(i)
+    print(model._logger.getMessageTextAtIndex(i))
